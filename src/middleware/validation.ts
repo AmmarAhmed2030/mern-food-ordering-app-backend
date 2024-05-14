@@ -21,3 +21,27 @@ export const validateMyUserRequest = [
   body("country").isString().notEmpty().withMessage("country must be a string"),
   handleValidationErrors,
 ];
+
+export const validateMyRestaurantRequest = [
+  body("restaurantName").notEmpty().withMessage("Restaurant Name is required"),
+  body("city").notEmpty().withMessage("City is required"),
+  body("country").notEmpty().withMessage("Country is required"),
+  body("deliveryPrice")
+    .isFloat({ min: 0 })
+    .withMessage("Delivery price must be a positive number"),
+  body("estimatedDeliveryTime")
+    .isInt({ min: 0 })
+    .withMessage("Estimated Delivery Time mustbe a positive integr"),
+  body("cuisines")
+    .isArray()
+    .withMessage("Cuisines must be an array")
+    .not()
+    .isEmpty()
+    .withMessage("cuisines array cannot be empty"),
+  body("menuItems").isArray().withMessage("Menu items must be an array"),
+  body("menuItems.*.name").notEmpty().withMessage("Menu item name is required"),
+  body("menuItems.*.price")
+    .isFloat({ min: 0 })
+    .withMessage("Menu item price must be a positive number"),
+  handleValidationErrors,
+];
