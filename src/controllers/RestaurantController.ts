@@ -70,7 +70,30 @@ const searchRestaurant = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
+const getTopRestaurants = async (req: Request, res: Response) => {
+  try {
+    const restaurants = await Restaurant.find({});
+    if (restaurants.length === 0) {
+      res.status(200).json({
+        data: [],
+        status: "success",
+      });
+      return;
+    }
+    res.status(200).json({
+      data: restaurants,
+      status: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "error",
+      message: "Something went wrong",
+    });
+  }
+};
 export default {
   searchRestaurant,
   getRestaurant,
+  getTopRestaurants,
 };
